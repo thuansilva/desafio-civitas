@@ -25,6 +25,7 @@
     "@vitest/coverage-v8": "^4.0.6",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
+    "git-commit-msg-linter": "^5.0.8",
     "jsdom": "^27.1.0",
     "tailwindcss": "^4",
     "typescript": "^5",
