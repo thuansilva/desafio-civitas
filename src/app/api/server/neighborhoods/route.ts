@@ -12,7 +12,7 @@ export async function GET() {
         id: "r1",
         neighborhood_id: "1",
         aqi: 42,
-        pm25: 12,
+        pm10: 12,
         co: 0.4,
         quality_level: "bom",
         recorded_at: "2023-10-01T12:00:00Z",

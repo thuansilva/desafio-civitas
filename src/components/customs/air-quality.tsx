@@ -6,25 +6,21 @@ const qualityLabels = [
     key: "bom",
     label: "Bom",
     colorClass: "text-green-600",
-    dotColor: "bg-green-500",
   },
   {
     key: "moderado",
     label: "Moderado",
     colorClass: "text-yellow-600",
-    dotColor: "bg-yellow-500",
   },
   {
     key: "ruim",
     label: "Ruim",
     colorClass: "text-red-600",
-    dotColor: "bg-red-500",
   },
   {
     key: "péssimo",
     label: "Péssimo",
     colorClass: "text-red-900",
-    dotColor: "bg-red-900",
   },
 ] as const;
 
@@ -55,17 +51,7 @@ function AirQuality({
             {qualityStats[item.key]}
           </div>
           <div className="flex items-center gap-1 text-xs text-gray-600">
-            <div
-              className="w-2 h-2 rounded-full"
-              // style={{
-              //   backgroundColor:
-              //     item.dotColor.split("-").pop() === "900"
-              //       ? "#7f1d1d"
-              //       : item.dotColor.split("-").pop() === "500"
-              //         ? item.dotColor.replace("bg-", "")
-              //         : item.dotColor.replace("bg-", ""),
-              // }}
-            />
+            <div className="w-2 h-2 rounded-full" />
             {item.label}
           </div>
         </div>
