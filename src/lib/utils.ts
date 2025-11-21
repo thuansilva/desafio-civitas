@@ -41,7 +41,10 @@ export function getQualityDescription(level: QualityLevel): string {
 
 export function dateToDayName(dateString: string) {
   const date = new Date(dateString);
-  const options = { weekday: "long", timeZone: "UTC" };
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    timeZone: "UTC",
+  };
   return date.toLocaleDateString("pt-BR", options);
 }
 
