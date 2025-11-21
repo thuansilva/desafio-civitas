@@ -38,3 +38,20 @@ export function getQualityDescription(level: QualityLevel): string {
   } as const;
   return descriptions[level as keyof typeof descriptions];
 }
+
+export function dateToDayName(dateString: string) {
+  const date = new Date(dateString);
+  const options = { weekday: "long", timeZone: "UTC" };
+  return date.toLocaleDateString("pt-BR", options);
+}
+
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
