@@ -174,7 +174,8 @@ describe("component NeighborhoodDetail", () => {
     expect(screen.getByText("Carregando dados...")).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText(/12/i)).toBeInTheDocument();
+      const pm10Elements = screen.getAllByText(/12/i);
+      expect(pm10Elements.length).toBeGreaterThan(0);
       expect(screen.getByText(/42/i)).toBeInTheDocument();
       expect(screen.getByText(/Péssimo/i)).toBeInTheDocument();
     });
