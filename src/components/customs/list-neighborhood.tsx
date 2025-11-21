@@ -1,6 +1,5 @@
-// import type { NeighborhoodWithLatestReading } from "../lib/database.types";
-// import { getQualityColor, getQualityLabel } from "../lib/airQualityService";
-import { NeighborhoodWithLatestReading, QualityLevel } from "@/app/page";
+import { NeighborhoodWithLatestReading } from "@/app/page";
+import { getQualityColor, getQualityLabel } from "@/lib/utils";
 import { MapPin, Wind, Activity } from "lucide-react";
 
 interface ListViewProps {
@@ -8,7 +7,10 @@ interface ListViewProps {
   onNeighborhoodClick: (neighborhood: NeighborhoodWithLatestReading) => void;
 }
 
-function ListView({ neighborhoods, onNeighborhoodClick }: ListViewProps) {
+function ListNeighborhood({
+  neighborhoods,
+  onNeighborhoodClick,
+}: ListViewProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString("pt-BR", {
@@ -18,26 +20,6 @@ function ListView({ neighborhoods, onNeighborhoodClick }: ListViewProps) {
       minute: "2-digit",
     });
   };
-
-  function getQualityColor(level: QualityLevel): string {
-    const colorsQuality = {
-      bom: "#10b981",
-      moderado: "#f59e0b",
-      ruim: "#ef4444",
-      péssimo: "#7f1d1d",
-    };
-    return colorsQuality[level];
-  }
-
-  function getQualityLabel(level: QualityLevel): string {
-    const labels = {
-      bom: "Bom",
-      moderado: "Moderado",
-      ruim: "Ruim",
-      péssimo: "Péssimo",
-    };
-    return labels[level];
-  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -124,4 +106,4 @@ function ListView({ neighborhoods, onNeighborhoodClick }: ListViewProps) {
   );
 }
 
-export default ListView;
+export default ListNeighborhood;
