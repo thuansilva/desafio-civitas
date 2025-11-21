@@ -1,6 +1,17 @@
-import { FAKE_DETAILS_DATA } from "@/app/data-faker/faker";
+import { FAKE_READING } from "@/app/data-faker/faker-details-neighborhood";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  return NextResponse.json(FAKE_DETAILS_DATA);
+  const neighborhood = FAKE_READING.map((n) => {
+    return {
+      id: n.id,
+      name: n.name,
+      latitude: n.latitude,
+      longitude: n.longitude,
+      created_at: n.created_at,
+      latest_reading: n.latest_reading[0],
+    };
+  });
+
+  return NextResponse.json(neighborhood);
 }
