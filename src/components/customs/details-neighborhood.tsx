@@ -30,6 +30,7 @@ import {
   getQualityLabel,
 } from "@/lib/utils";
 import ChartNeighborhood from "./chart-detail";
+import { fetchNeighborhoodReadings } from "@/http/api-detail";
 
 interface NeighborhoodDetailProps {
   neighborhood: NeighborhoodWithLatestReading;
@@ -44,27 +45,18 @@ function NeighborhoodDetail({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadReadings = async () => {
+      try {
+        const data = await fetchNeighborhoodReadings(neighborhood.id);
+        setReadings(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
     loadReadings();
   }, [neighborhood.id]);
-
-  const loadReadings = async () => {
-    try {
-      const res = await fetch(`/api/neighborhoods/${neighborhood.id}`, {
-        method: "GET",
-        cache: "no-store",
-      });
-
-      if (!res.ok) {
-        throw new Error("Erro ao buscar dados do servidor fake");
-      }
-      const data = await res.json();
-      setReadings(data);
-    } catch (error) {
-      console.error("Error loading data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const latestReading = neighborhood.latest_reading;
 
