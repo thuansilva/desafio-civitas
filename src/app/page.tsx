@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Map, List, Filter, Wind } from "lucide-react";
-// Importações de componentes do shadcn/ui
-import { Button } from "@/components/ui/button";
+
 import {
   Select,
   SelectContent,
@@ -11,26 +11,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
 import AirQuality from "@/components/customs/air-quality";
-// Seus componentes e serviços
-// import { MapView } from "./components/MapView";
-// import { ListView } from "./components/ListView";
-// import { NeighborhoodDetail } from "./components/NeighborhoodDetail";
-// import { getNeighborhoodsWithLatestReadings } from "./lib/airQualityService";
+import { QualityLevel } from "@/lib/utils";
+import ListNeighborhood from "@/components/customs/list-neighborhood";
+import NeighborhoodDetail from "@/components/customs/details-neighborhood";
+
+const MapView = dynamic(() => import("@/components/customs/map-view"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[500px] w-full flex items-center justify-center bg-muted rounded-lg">
+      <p className="text-muted-foreground">Carregando mapa...</p>
+    </div>
+  ),
+});
 
 type ViewMode = "map" | "list";
-
-export type QualityLevel = "bom" | "moderado" | "ruim" | "péssimo";
-
-// const qualityColors: Record = {
-//   bom: { color: "text-green-600", bg: "bg-green-100" },
-//   moderado: { color: "text-yellow-600", bg: "bg-yellow-100" },
-//   ruim: { color: "text-red-600", bg: "bg-red-100" },
-//   péssimo: { color: "text-red-900", bg: "bg-red-200" },
-// };
 
 export interface AirQualityReading {
   id: string;
@@ -72,17 +69,15 @@ function App() {
 
   useEffect(() => {
     loadData();
-    const interval = setInterval(loadData, 60000);
-    return () => clearInterval(interval);
   }, []);
 
-  // useEffect(() => {
-  //   applyFilters();
-  // }, [neighborhoods, qualityFilter, neighborhoodFilter]);
+  useEffect(() => {
+    applyFilters();
+  }, [neighborhoods, qualityFilter, neighborhoodFilter]);
 
   const loadData = async () => {
     try {
-      const res = await fetch("/api/server/neighborhoods", {
+      const res = await fetch("/api/neighborhoods", {
         method: "GET",
         cache: "no-store",
       });
@@ -91,6 +86,7 @@ function App() {
         throw new Error("Erro ao buscar dados do servidor fake");
       }
       const data = await res.json();
+      // console.log("error ", data);
       setNeighborhoods(data);
     } catch (error) {
       console.error("Error loading data:", error);
@@ -99,62 +95,21 @@ function App() {
     }
   };
 
-  // const applyFilters = () => {
-  //   let filtered = [...neighborhoods];
+  const applyFilters = () => {
+    let filtered = [...neighborhoods];
 
-  //   if (qualityFilter !== "all") {
-  //     filtered = filtered.filter(
-  //       (n) => n.latest_reading?.quality_level === qualityFilter
-  //     );
-  //   }
+    if (qualityFilter !== "all") {
+      filtered = filtered.filter(
+        (n) => n.latest_reading?.quality_level === qualityFilter,
+      );
+    }
 
-  //   if (neighborhoodFilter !== "all") {
-  //     filtered = filtered.filter((n) => n.id === neighborhoodFilter);
-  //   }
+    if (neighborhoodFilter !== "all") {
+      filtered = filtered.filter((n) => n.id === neighborhoodFilter);
+    }
 
-  //   setFilteredNeighborhoods(filtered);
-  // };
-
-  // const qualityStats = {
-  //   bom: neighborhoods.filter((n) => n.latest_reading?.quality_level === "bom")
-  //     .length,
-  //   moderado: neighborhoods.filter(
-  //     (n) => n.latest_reading?.quality_level === "moderado"
-  //   ).length,
-  //   ruim: neighborhoods.filter(
-  //     (n) => n.latest_reading?.quality_level === "ruim"
-  //   ).length,
-  //   péssimo: neighborhoods.filter(
-  //     (n) => n.latest_reading?.quality_level === "péssimo"
-  //   ).length,
-  // };
-
-  // const qualityLabels = [
-  //   {
-  //     key: "bom",
-  //     label: "Bom",
-  //     colorClass: "text-green-600",
-  //     dotColor: "bg-green-500",
-  //   },
-  //   {
-  //     key: "moderado",
-  //     label: "Moderado",
-  //     colorClass: "text-yellow-600",
-  //     dotColor: "bg-yellow-500",
-  //   },
-  //   {
-  //     key: "ruim",
-  //     label: "Ruim",
-  //     colorClass: "text-red-600",
-  //     dotColor: "bg-red-500",
-  //   },
-  //   {
-  //     key: "péssimo",
-  //     label: "Péssimo",
-  //     colorClass: "text-red-900",
-  //     dotColor: "bg-red-900",
-  //   },
-  // ] as const;
+    setFilteredNeighborhoods(filtered);
+  };
 
   return (
     <div className="min-h-screen bg-muted/40">
@@ -176,29 +131,6 @@ function App() {
 
             {/* Estatísticas de Qualidade (usando Badge ou divs simples estilizadas) */}
             <AirQuality neighborhoods={neighborhoods} />
-            {/* <div className="hidden md:flex items-center gap-6">
-              {qualityLabels.map((item) => (
-                <div key={item.key} className="text-center">
-                  <div className={`text-xl font-bold ${item.colorClass}`}>
-                    {qualityStats[item.key]}
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-gray-600">
-                    <div
-                      className="w-2 h-2 rounded-full"
-                      // style={{
-                      //   backgroundColor:
-                      //     item.dotColor.split("-").pop() === "900"
-                      //       ? "#7f1d1d"
-                      //       : item.dotColor.split("-").pop() === "500"
-                      //         ? item.dotColor.replace("bg-", "")
-                      //         : item.dotColor.replace("bg-", ""),
-                      // }}
-                    />
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div> */}
           </div>
         </div>
       </header>
@@ -221,7 +153,10 @@ function App() {
                 value={neighborhoodFilter}
                 onValueChange={setNeighborhoodFilter}
               >
-                <SelectTrigger className="w-full md:w-[200px]">
+                <SelectTrigger
+                  className="w-full md:w-[200px]"
+                  data-testid="neighborhood-select"
+                >
                   <SelectValue placeholder="Selecione um bairro" />
                 </SelectTrigger>
                 <SelectContent>
@@ -236,7 +171,6 @@ function App() {
                     ))}
                 </SelectContent>
               </Select>
-
               {/* Select para Qualidade */}
               <Select
                 value={qualityFilter}
@@ -301,7 +235,7 @@ function App() {
               <p className="text-gray-600">
                 Nenhum bairro encontrado com os filtros selecionados
               </p>
-              <Button
+              {/* <Button
                 onClick={() => {
                   setQualityFilter("all");
                   setNeighborhoodFilter("all");
@@ -309,33 +243,33 @@ function App() {
                 className="mt-4"
               >
                 Limpar Filtros
-              </Button>
+              </Button> */}
             </CardContent>
           </Card>
         ) : (
           <>
-            {/* {viewMode === "map" ? (
+            {viewMode === "map" ? (
               <MapView
                 neighborhoods={filteredNeighborhoods}
                 onNeighborhoodClick={setSelectedNeighborhood}
               />
             ) : (
-              <ListView
+              <ListNeighborhood
                 neighborhoods={filteredNeighborhoods}
                 onNeighborhoodClick={setSelectedNeighborhood}
               />
-            )} */}
+            )}
           </>
         )}
       </main>
 
       {/* Detalhe do Bairro (Mantenha o componente original, mas considere usar um shadcn Dialog/Drawer se for um modal) */}
-      {/* {selectedNeighborhood && (
+      {selectedNeighborhood && (
         <NeighborhoodDetail
           neighborhood={selectedNeighborhood}
           onClose={() => setSelectedNeighborhood(null)}
         />
-      )} */}
+      )}
     </div>
   );
 }
