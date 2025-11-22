@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { AirQualityReading, NeighborhoodWithLatestReading } from "@/app/page";
 import {
@@ -72,7 +71,7 @@ function NeighborhoodDetail({
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="px-4 sm:px-6">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-2xl font-bold">
             <MapPin size={24} className="text-blue-600" />
@@ -83,7 +82,7 @@ function NeighborhoodDetail({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="h-200 rounded-md">
+        <div className="h-[80vh] overflow-y-auto rounded-md [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {loading ? (
             <div className="text-center py-12 text-gray-500">
               Carregando dados...
@@ -97,12 +96,15 @@ function NeighborhoodDetail({
                   backgroundColor: `${color}10`,
                 }}
               >
-                <CardHeader className="pb-3 flex justify-between">
-                  <div>
+                <CardHeader className="pb-3 flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-0">
+                  <div className="flex flex-col sm:block">
                     <CardTitle className="text-sm font-semibold text-muted-foreground mb-1">
                       Qualidade do Ar Atual
                     </CardTitle>
-                    <div className="text-3xl font-bold mb-2" style={{ color }}>
+                    <div
+                      className="text-3xl font-bold mb-2 self-start sm:self-auto"
+                      style={{ color }}
+                    >
                       <Badge
                         variant="outline"
                         style={{
@@ -115,7 +117,7 @@ function NeighborhoodDetail({
                       </Badge>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="flex flex-col sm:block text-left sm:text-right">
                     <CardTitle className="text-sm font-semibold text-muted-foreground mb-1">
                       Índice AQI
                     </CardTitle>
@@ -139,7 +141,7 @@ function NeighborhoodDetail({
                 <h3 className="text-lg font-semibold mb-4">
                   Poluentes Medidos
                 </h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
                   {[
                     {
                       icon: Cloud,
@@ -191,7 +193,7 @@ function NeighborhoodDetail({
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                         {[
                           { level: "bom" as const, range: "0-50" },
                           { level: "moderado" as const, range: "51-100" },
@@ -229,7 +231,7 @@ function NeighborhoodDetail({
               Nenhum dado disponível para este bairro
             </div>
           )}
-        </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );
