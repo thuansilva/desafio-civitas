@@ -50,7 +50,7 @@ function ChartNeighborhood({
 
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <BarChart accessibilityLayer data={data}>
+      <BarChart accessibilityLayer data={data} margin={{ left: -20, right: 0 }}>
         <CartesianGrid vertical={false} />
 
         <XAxis
