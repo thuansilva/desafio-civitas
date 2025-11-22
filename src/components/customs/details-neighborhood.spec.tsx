@@ -13,7 +13,7 @@ const MOCK_READINGS_DATA = [
 ];
 
 describe("component NeighborhoodDetail", () => {
-  test("deve mostrar o status da 'qualidade do ar', 'pm10' e 'aqi'  ", async () => {
+  it("should show 'aqi', 'pm10' and 'quality level'  ", async () => {
     (api.fetchNeighborhoodReadings as Mock).mockResolvedValue({
       json: () => Promise.resolve(MOCK_READINGS_DATA),
     });
@@ -37,7 +37,7 @@ describe("component NeighborhoodDetail", () => {
             created_at: "2023-10-01T12:05:00Z",
           },
         }}
-        onClose={() => {}}
+        onClose={vi.fn()}
       />,
     );
 
