@@ -96,15 +96,12 @@ function NeighborhoodDetail({
                   backgroundColor: `${color}10`,
                 }}
               >
-                <CardHeader className="pb-3 flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-0">
-                  <div className="flex flex-col sm:block">
+                <CardHeader className="pb-3 flex flex-row justify-between items-start">
+                  <div>
                     <CardTitle className="text-sm font-semibold text-muted-foreground mb-1">
                       Qualidade do Ar Atual
                     </CardTitle>
-                    <div
-                      className="text-3xl font-bold mb-2 self-start sm:self-auto"
-                      style={{ color }}
-                    >
+                    <div className="text-3xl font-bold mb-2" style={{ color }}>
                       <Badge
                         variant="outline"
                         style={{
@@ -117,7 +114,7 @@ function NeighborhoodDetail({
                       </Badge>
                     </div>
                   </div>
-                  <div className="flex flex-col sm:block text-left sm:text-right">
+                  <div className="text-right">
                     <CardTitle className="text-sm font-semibold text-muted-foreground mb-1">
                       Índice AQI
                     </CardTitle>
