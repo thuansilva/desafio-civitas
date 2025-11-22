@@ -86,7 +86,7 @@ const neighborhoods: NeighborhoodWithLatestReading[] = [
 ];
 
 describe("componente de Listagem", () => {
-  it("deve mostar o nome do bairro listado ", () => {
+  it("should show the name of the neighborhood listed ", () => {
     render(
       <ListNeighborhood
         onNeighborhoodClick={vi.fn()}
