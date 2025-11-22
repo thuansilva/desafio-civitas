@@ -58,8 +58,7 @@ function ChartNeighborhood({
           tickLine={false}
           tickMargin={10}
           axisLine={false}
-          // Usar o nome completo, ou descomentar o tickFormatter se quiser abreviar:
-          //   tickFormatter={(value) => value.slice(0, 3)}
+          tickFormatter={(value) => value.slice(0, 3)}
         />
 
         <YAxis />
