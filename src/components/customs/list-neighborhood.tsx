@@ -1,4 +1,4 @@
-import { NeighborhoodWithLatestReading } from "@/app/page";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import { getQualityColor, getQualityLabel } from "@/lib/utils";
 import { MapPin, Wind, Activity } from "lucide-react";
 

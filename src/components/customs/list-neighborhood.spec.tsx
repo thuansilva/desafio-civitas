@@ -1,9 +1,6 @@
-import * as api from "@/http/api-detail";
-import NeighborhoodDetail from "./details-neighborhood";
-import { render, waitFor, screen } from "@testing-library/react";
-import { Mock } from "vitest";
+import { render, screen } from "@testing-library/react";
 import ListNeighborhood from "./list-neighborhood";
-import { NeighborhoodWithLatestReading } from "@/app/page";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 
 const neighborhoods: NeighborhoodWithLatestReading[] = [
   {
