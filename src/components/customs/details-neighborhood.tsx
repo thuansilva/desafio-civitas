@@ -176,7 +176,9 @@ function NeighborhoodDetail({
 
               {!loading && readings.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold mb-4">Histórico AQI</h3>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Histórico AQI (últimas 7 leituras)
+                  </h3>
                   <Card>
                     <ChartNeighborhood readingsObject={readings} />
                   </Card>
