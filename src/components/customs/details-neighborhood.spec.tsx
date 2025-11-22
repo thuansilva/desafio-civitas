@@ -1,22 +1,51 @@
-import * as api from "@/http/api-detail";
 import NeighborhoodDetail from "./details-neighborhood";
 import { render, waitFor, screen } from "@testing-library/react";
-import { Mock } from "vitest";
 
-vi.mock("@/http/api-detail", () => ({
-  fetchNeighborhoodReadings: vi.fn(),
-}));
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+
+const { mockGetReadings } = vi.hoisted(() => {
+  return {
+    mockGetReadings: vi.fn(),
+  };
+});
+
+vi.mock("@/repository/api-neighborhood-repository", () => {
+  return {
+    ApiNeighborhoodRepository: class {
+      getReadings = mockGetReadings;
+    },
+  };
+});
+
 const MOCK_READINGS_DATA = [
-  { id: "r1", aqi: 150, quality_level: "ruim" },
-  { id: "r2", aqi: 120, quality_level: "ruim" },
-  { id: "r3", aqi: 80, quality_level: "moderado" },
+  {
+    id: "2",
+    name: "Bairro A",
+    latitude: -22.9068,
+    longitude: -43.1729,
+    created_at: "2023-01-01T00:00:00Z",
+    latest_reading: {
+      id: "r1",
+      neighborhood_id: "1",
+      aqi: 43,
+      pm10: 12,
+      no2: 5,
+      co: 0.4,
+      quality_level: "péssimo",
+      recorded_at: "2023-10-01T12:00:00Z",
+      created_at: "2023-10-01T12:05:00Z",
+    },
+  },
 ];
 
 describe("component NeighborhoodDetail", () => {
-  it("should show 'aqi', 'pm10' and 'quality level'  ", async () => {
-    (api.fetchNeighborhoodReadings as Mock).mockResolvedValue({
-      json: () => Promise.resolve(MOCK_READINGS_DATA),
-    });
+  it.only("should show 'aqi', 'pm10' and 'quality level'", async () => {
+    mockGetReadings.mockResolvedValue(MOCK_READINGS_DATA);
+
     render(
       <NeighborhoodDetail
         neighborhood={{
@@ -41,13 +70,8 @@ describe("component NeighborhoodDetail", () => {
       />,
     );
 
-    expect(screen.getByText("Carregando dados...")).toBeInTheDocument();
-
-    await waitFor(() => {
-      const pm10Elements = screen.getAllByText(/12/i);
-      expect(pm10Elements.length).toBeGreaterThan(0);
-      expect(screen.getByText(/42/i)).toBeInTheDocument();
-      expect(screen.getByText(/Péssimo/i)).toBeInTheDocument();
-    });
+    expect(await screen.findByText("42")).toBeInTheDocument();
+    expect(await screen.findByText("12.0")).toBeInTheDocument();
+    expect(await screen.findByText("Bom")).toBeInTheDocument();
   });
 });

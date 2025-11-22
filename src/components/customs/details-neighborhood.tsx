@@ -21,7 +21,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
-import { AirQualityReading, NeighborhoodWithLatestReading } from "@/app/page";
+import {
+  AirQualityReading,
+  NeighborhoodWithLatestReading,
+} from "@/core/domain/neighborhood";
 import {
   formatDate,
   getQualityColor,
@@ -29,7 +32,7 @@ import {
   getQualityLabel,
 } from "@/lib/utils";
 import ChartNeighborhood from "./chart-detail";
-import { fetchNeighborhoodReadings } from "@/http/api-detail";
+import { ApiNeighborhoodRepository } from "@/repository/api-neighborhood-repository";
 
 interface NeighborhoodDetailProps {
   neighborhood: NeighborhoodWithLatestReading;
@@ -46,7 +49,8 @@ function NeighborhoodDetail({
   useEffect(() => {
     const loadReadings = async () => {
       try {
-        const data = await fetchNeighborhoodReadings(neighborhood.id);
+        const repository = new ApiNeighborhoodRepository();
+        const data = await repository.getReadings(neighborhood.id);
         setReadings(data);
       } catch (error) {
         console.error(error);
