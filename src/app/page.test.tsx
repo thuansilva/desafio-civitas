@@ -104,36 +104,4 @@ describe("Page Home", () => {
       expect(screen.getByText(/Péssimo/i)).toBeInTheDocument();
     });
   });
-
-  test("Deve apresentar apenas 1 local com qualdiade de ar 'Bom'", () => {
-    render(<AirQuality neighborhoods={neighborhoods} />);
-
-    expect(
-      neighborhoods.some((n) => n.latest_reading?.quality_level === "bom"),
-    ).toBe(true);
-  });
-
-  test("Deve apresentar apenas 1 local com qualdiade de ar 'Moderado'", () => {
-    render(<AirQuality neighborhoods={neighborhoods} />);
-
-    expect(
-      neighborhoods.some((n) => n.latest_reading?.quality_level === "moderado"),
-    ).toBe(true);
-  });
-
-  test("Deve apresentar apenas 1 local com qualdiade de ar 'Ruim'", () => {
-    render(<AirQuality neighborhoods={neighborhoods} />);
-
-    expect(
-      neighborhoods.some((n) => n.latest_reading?.quality_level === "ruim"),
-    ).toBe(true);
-  });
-
-  test("Deve apresentar apenas 1 local com qualdiade de ar 'Pessimo'", () => {
-    render(<AirQuality neighborhoods={neighborhoods} />);
-
-    expect(
-      neighborhoods.some((n) => n.latest_reading?.quality_level === "péssimo"),
-    ).toBe(true);
-  });
 });

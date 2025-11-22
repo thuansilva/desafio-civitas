@@ -24,7 +24,6 @@ export default function MapView({
   neighborhoods,
   onNeighborhoodClick,
 }: MapViewProps) {
-  // Center on Rio de Janeiro
   const position: [number, number] = [-22.9068, -43.1729];
 
   return (
