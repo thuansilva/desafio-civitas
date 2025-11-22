@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import { Mock } from "vitest";
-import AirQuality from "@/components/customs/air-quality";
-import Home, { NeighborhoodWithLatestReading } from "./page";
+import Home from "./page";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 
 global.fetch = vi.fn(() =>
   Promise.resolve({

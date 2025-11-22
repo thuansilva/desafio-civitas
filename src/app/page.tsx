@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Map, List, Filter, Wind } from "lucide-react";
 
@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
 import AirQuality from "@/components/customs/air-quality";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import { QualityLevel } from "@/lib/utils";
 import ListNeighborhood from "@/components/customs/list-neighborhood";
 import NeighborhoodDetail from "@/components/customs/details-neighborhood";
@@ -29,91 +30,26 @@ const MapView = dynamic(() => import("@/components/customs/map-view"), {
 
 type ViewMode = "map" | "list";
 
-export interface AirQualityReading {
-  id: string;
-  neighborhood_id: string;
-  aqi: number;
-  pm10: number;
-  no2: number;
-  co: number;
-  quality_level: QualityLevel;
-  recorded_at: string;
-  created_at: string;
-}
-
-export interface Neighborhood {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  created_at: string;
-}
-
-export interface NeighborhoodWithLatestReading extends Neighborhood {
-  latest_reading?: AirQualityReading;
-}
+import { useNeighborhoods } from "@/hooks/use-neighborhoods";
+import { useNeighborhoodFilter } from "@/hooks/use-neighborhood-filter";
 
 function App() {
   const [viewMode, setViewMode] = useState<ViewMode>("map");
-  const [neighborhoods, setNeighborhoods] = useState<
-    NeighborhoodWithLatestReading[]
-  >([]);
-  const [filteredNeighborhoods, setFilteredNeighborhoods] = useState<
-    NeighborhoodWithLatestReading[]
-  >([]);
   const [selectedNeighborhood, setSelectedNeighborhood] =
     useState<NeighborhoodWithLatestReading | null>(null);
-  const [qualityFilter, setQualityFilter] = useState("all");
-  const [neighborhoodFilter, setNeighborhoodFilter] = useState<string>("all");
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const { neighborhoods, loading } = useNeighborhoods();
 
-  useEffect(() => {
-    applyFilters();
-  }, [neighborhoods, qualityFilter, neighborhoodFilter]);
-
-  const loadData = async () => {
-    try {
-      const res = await fetch("/api/neighborhoods", {
-        method: "GET",
-        cache: "no-store",
-      });
-
-      if (!res.ok) {
-        throw new Error("Erro ao buscar dados do servidor fake");
-      }
-      const data = await res.json();
-      // console.log("error ", data);
-      setNeighborhoods(data);
-    } catch (error) {
-      console.error("Error loading data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const applyFilters = () => {
-    let filtered = [...neighborhoods];
-
-    if (qualityFilter !== "all") {
-      filtered = filtered.filter(
-        (n) => n.latest_reading?.quality_level === qualityFilter,
-      );
-    }
-
-    if (neighborhoodFilter !== "all") {
-      filtered = filtered.filter((n) => n.id === neighborhoodFilter);
-    }
-
-    setFilteredNeighborhoods(filtered);
-  };
+  const {
+    qualityFilter,
+    setQualityFilter,
+    neighborhoodFilter,
+    setNeighborhoodFilter,
+    filteredNeighborhoods,
+  } = useNeighborhoodFilter(neighborhoods);
 
   return (
     <div className="min-h-screen bg-muted/40">
-      {/* Header atualizado com Card/Badge/Divs simples */}
       <header className="sticky top-0 z-10 w-full border-b bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -129,7 +65,6 @@ function App() {
               </div>
             </div>
 
-            {/* Estatísticas de Qualidade (usando Badge ou divs simples estilizadas) */}
             <AirQuality neighborhoods={neighborhoods} />
           </div>
         </div>
@@ -137,8 +72,6 @@ function App() {
       <Separator />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Card para Filtros e Visualização */}
-
         <Card className="mb-6">
           <CardHeader className="p-4 border-b">
             <CardTitle className="flex items-center gap-3 text-lg font-semibold">
@@ -148,7 +81,6 @@ function App() {
           </CardHeader>
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              {/* Select para Bairro */}
               <Select
                 value={neighborhoodFilter}
                 onValueChange={setNeighborhoodFilter}
@@ -171,7 +103,6 @@ function App() {
                     ))}
                 </SelectContent>
               </Select>
-              {/* Select para Qualidade */}
               <Select
                 value={qualityFilter}
                 onValueChange={(val) =>
@@ -190,7 +121,6 @@ function App() {
                 </SelectContent>
               </Select>
 
-              {/* Toggle Group (substituindo o div customizado) */}
               <div className="flex bg-muted rounded-md p-1">
                 <Toggle
                   pressed={viewMode === "map"}
@@ -220,7 +150,6 @@ function App() {
           </CardContent>
         </Card>
 
-        {/* Conteúdo Principal (Mapa ou Lista) */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24 bg-white rounded-xl shadow-md">
             <Wind
@@ -235,15 +164,6 @@ function App() {
               <p className="text-gray-600">
                 Nenhum bairro encontrado com os filtros selecionados
               </p>
-              {/* <Button
-                onClick={() => {
-                  setQualityFilter("all");
-                  setNeighborhoodFilter("all");
-                }}
-                className="mt-4"
-              >
-                Limpar Filtros
-              </Button> */}
             </CardContent>
           </Card>
         ) : (
@@ -263,7 +183,6 @@ function App() {
         )}
       </main>
 
-      {/* Detalhe do Bairro (Mantenha o componente original, mas considere usar um shadcn Dialog/Drawer se for um modal) */}
       {selectedNeighborhood && (
         <NeighborhoodDetail
           neighborhood={selectedNeighborhood}
