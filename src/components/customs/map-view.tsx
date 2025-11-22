@@ -2,7 +2,7 @@
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { NeighborhoodWithLatestReading } from "@/app/page";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import L from "leaflet";
 
 // Fix for default marker icon using CDN

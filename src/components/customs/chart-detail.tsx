@@ -10,7 +10,7 @@ import {
 
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { dateToDayName, getQualityColor } from "@/lib/utils";
-import { AirQualityReading } from "@/app/page";
+import { AirQualityReading } from "@/core/domain/neighborhood";
 
 const chartConfig = {
   aqi: {
