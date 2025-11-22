@@ -43,7 +43,7 @@ const MOCK_READINGS_DATA = [
 ];
 
 describe("component NeighborhoodDetail", () => {
-  it.only("should show 'aqi', 'pm10' and 'quality level'", async () => {
+  it("should show 'aqi', 'pm10' and 'quality level'", async () => {
     mockGetReadings.mockResolvedValue(MOCK_READINGS_DATA);
 
     render(
