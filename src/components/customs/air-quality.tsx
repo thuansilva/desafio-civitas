@@ -1,5 +1,5 @@
 "use client";
-import { NeighborhoodWithLatestReading } from "@/app/page";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 
 const qualityLabels = [
   {
@@ -33,13 +33,13 @@ function AirQuality({
     bom: neighborhoods.filter((n) => n.latest_reading?.quality_level === "bom")
       .length,
     moderado: neighborhoods.filter(
-      (n) => n.latest_reading?.quality_level === "moderado"
+      (n) => n.latest_reading?.quality_level === "moderado",
     ).length,
     ruim: neighborhoods.filter(
-      (n) => n.latest_reading?.quality_level === "ruim"
+      (n) => n.latest_reading?.quality_level === "ruim",
     ).length,
     péssimo: neighborhoods.filter(
-      (n) => n.latest_reading?.quality_level === "péssimo"
+      (n) => n.latest_reading?.quality_level === "péssimo",
     ).length,
   };
 

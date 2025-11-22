@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import AirQuality from "./air-quality";
-import { NeighborhoodWithLatestReading } from "@/app/page";
+import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 
 const mockNeighborhoods: NeighborhoodWithLatestReading[] = [
   {
