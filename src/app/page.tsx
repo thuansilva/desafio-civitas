@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import dynamic from "next/dynamic";
+
 import { Map, List, Filter, Wind } from "lucide-react";
 
 import {
@@ -17,16 +17,10 @@ import AirQuality from "@/components/customs/air-quality";
 import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import { QualityLevel } from "@/lib/utils";
 import ListNeighborhood from "@/components/customs/list-neighborhood";
+import ListNeighborhoodSkeleton from "@/components/customs/skeleton/list-neighborhood-skeleton";
 import NeighborhoodDetail from "@/components/customs/details-neighborhood";
 
-const MapView = dynamic(() => import("@/components/customs/map-view"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-[500px] w-full flex items-center justify-center bg-muted rounded-lg">
-      <p className="text-muted-foreground">Carregando mapa...</p>
-    </div>
-  ),
-});
+import MapView from "@/components/customs/skeleton/map-view";
 
 type ViewMode = "map" | "list";
 
@@ -151,13 +145,16 @@ function App() {
         </Card>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-24 bg-white rounded-xl shadow-md">
-            <Wind
-              size={48}
-              className="text-blue-600 animate-spin mx-auto mb-4"
-            />
-            <p className="text-gray-600">Carregando dados...</p>
-          </div>
+          <>
+            {viewMode === "map" ? (
+              <MapView
+                neighborhoods={filteredNeighborhoods}
+                onNeighborhoodClick={setSelectedNeighborhood}
+              />
+            ) : (
+              <ListNeighborhoodSkeleton />
+            )}
+          </>
         ) : filteredNeighborhoods.length === 0 ? (
           <Card className="p-12 text-center">
             <CardContent>

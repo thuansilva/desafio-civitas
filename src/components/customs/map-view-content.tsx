@@ -5,7 +5,6 @@ import "leaflet/dist/leaflet.css";
 import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import L from "leaflet";
 
-// Fix for default marker icon using CDN
 const DefaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
