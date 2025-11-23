@@ -15,6 +15,7 @@ Este projeto vai além do básico, implementando:
 - **Performance**: Lazy loading de componentes pesados (como o mapa) e skeletons para feedback visual durante o carregamento.
 - **Arquitetura Limpa**: Separação clara entre camadas de domínio, repositórios e componentes visuais.
 - **Implementaçõa de testes**: Implementação de testes unitários para garantir a qualidade do código.
+- **CI/CD**: Integração contínua e entrega contínua para garantir a qualidade do código, rodando testes automatizados antes de ir para produção.
 
 ## ✨ Principais Características
 
