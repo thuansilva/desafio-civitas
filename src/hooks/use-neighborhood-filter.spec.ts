@@ -1,4 +1,4 @@
-import { renderHook, act, waitFor } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 import { useNeighborhoodFilter } from "./use-neighborhood-filter";
 import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 

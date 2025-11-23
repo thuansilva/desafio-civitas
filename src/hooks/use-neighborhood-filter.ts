@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import { QualityLevel } from "@/lib/utils";
-import { CloudCog } from "lucide-react";
 
 export function useNeighborhoodFilter(
   neighborhoods: NeighborhoodWithLatestReading[],

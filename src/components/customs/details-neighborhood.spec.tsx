@@ -1,5 +1,5 @@
 import NeighborhoodDetail from "./details-neighborhood";
-import { render, waitFor, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 global.ResizeObserver = class ResizeObserver {
   observe() {}
