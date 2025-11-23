@@ -1,83 +1,90 @@
-# Template Next.js Avançado
+# Desafio Civitas - Painel de Monitoramento da Qualidade do Ar
 
-Este é um template para projetos Next.js, pré-configurado com ferramentas essenciais para desenvolvimento, testes e qualidade de código. O objetivo é acelerar o início de novos projetos, garantindo que as melhores práticas já estejam implementadas desde o primeiro dia.
+Este projeto é uma aplicação web desenvolvida como parte do **Desafio Técnico da Civitas**. O objetivo é fornecer um painel interativo e em tempo real para o monitoramento da qualidade do ar em diferentes bairros do Rio de Janeiro.
 
-## 🚀 Motivação
+A aplicação foi construída sobre um template robusto de Next.js, focado em performance, qualidade de código e experiência do usuário.
 
-Iniciar um projeto do zero exige a configuração repetitiva de ferramentas como TypeScript, ESLint, Tailwind CSS e, principalmente, um ambiente de testes robusto. Este template resolve esse problema, oferecendo uma base sólida e pronta para produção, permitindo que você foque no que realmente importa: construir a sua aplicação.
+## 🚀 Motivação e Contexto
+
+O "Teste da Civitas" visa avaliar a capacidade de desenvolvimento de uma solução front-end moderna, que consuma dados de uma API, apresente-os de forma clara e interativa (mapas e gráficos) e siga boas práticas de engenharia de software (testes, tipagem, componentização).
+
+Este projeto vai além do básico, implementando:
+
+- **Visualização Geográfica**: Mapa interativo com marcadores dos bairros.
+- **Dados Detalhados**: Modais com informações aprofundadas, incluindo histórico e gráficos.
+- **Performance**: Lazy loading de componentes pesados (como o mapa) e skeletons para feedback visual durante o carregamento.
+- **Arquitetura Limpa**: Separação clara entre camadas de domínio, repositórios e componentes visuais.
+- **Implementaçõa de testes**: Implementação de testes unitários para garantir a qualidade do código.
 
 ## ✨ Principais Características
 
-- **Framework Moderno**: Construído sobre o **Next.js**, aproveitando Server-Side Rendering (SSR), Static Site Generation (SSG) e a robustez do ecossistema React.
-- **Qualidade de Código**: **TypeScript** para tipagem estática e **ESLint** para padronização de código, garantindo um código mais limpo e com menos bugs.
-- **Estilização Eficiente**: **Tailwind CSS** para uma estilização rápida e baseada em utilitários, totalmente configurado e pronto para uso.
-- **Ambiente de Testes Completo**: **Vitest** para testes unitários e de integração, com **React Testing Library** para testar componentes React de forma eficaz. A configuração de cobertura de código já está inclusa.
-- **Estrutura Organizada**: A estrutura de pastas segue as convenções do Next.js (App Router), facilitando a organização de rotas, componentes e lógica de negócio.
-
-## Instalação do vitest
-
-Comandos de pacotes Adicionados para o Desenvolvimento.
-
-```sh
-npm i -D vitest @vitejs/plugin-react @vitest/coverage-v8 jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
-
-```
-
-O que esses pacotes fazem?
-
-| Pacote                        | Pra quê serve?                                                            |
-| ----------------------------- | ------------------------------------------------------------------------- |
-| `vitest`                      | Test runner moderno (substitui o Jest com sintaxe semelhante)             |
-| `@vitejs/plugin-react`        | Suporte a JSX/TSX no Vite (essencial para projetos React)                 |
-| `@vitest/coverage-v8`         | Gera relatório de cobertura usando o motor V8 (como no Node)              |
-| `jsdom`                       | Emula o DOM no Node.js (necessário pra testar componentes React)          |
-| `@testing-library/react`      | Renderiza e interage com componentes de forma semelhante ao usuário       |
-| `@testing-library/jest-dom`   | Adiciona matchers úteis como `.toBeInTheDocument()` ao `expect`           |
-| `@testing-library/user-event` | Simula eventos realistas como cliques e digitação (com foco, delay, etc.) |
-| `clsx`                        | Junta classes de forma condicional (ótimo com Tailwind)                   |
-| `tsx`                         | Executa arquivos TypeScript direto no Node (sem precisar compilar antes)  |
-
----
+- **Monitoramento em Tempo Real**: Exibição dos índices de qualidade do ar (AQI) e poluentes (PM10, CO).
+- **Mapa Interativo**: Navegação geográfica pelos bairros monitorados, utilizando `react-leaflet`.
+- **Gráficos Históricos**: Visualização da evolução da qualidade do ar nos últimos dias com `recharts`.
+- **Filtros Avançados**: Capacidade de filtrar bairros por nome ou nível de qualidade do ar.
+- **Design Responsivo e Moderno**: Interface construída com **Tailwind CSS** e componentes do **Radix UI** (via shadcn/ui), garantindo acessibilidade e beleza.
+- **Lazy Loading**: Otimização do carregamento inicial, carregando o mapa apenas quando necessário.
+- **Feedback Visual**: Uso de Skeletons para indicar estados de carregamento na lista e no mapa.
 
 ## 🛠️ Tecnologias Utilizadas
 
-### Principais
+### Core
 
-- [Next.js](https://nextjs.org/)
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- **[Next.js 15+](https://nextjs.org/)**: Framework React para produção, utilizando App Router.
+- **[React 19](https://react.dev/)**: Biblioteca para construção de interfaces.
+- **[TypeScript](https://www.typescriptlang.org/)**: Superset JavaScript para tipagem estática e segurança.
 
-### Estilização
+### Estilização e UI
 
-- [Tailwind CSS](https://tailwindcss.com/)
+- **[Tailwind CSS v4](https://tailwindcss.com/)**: Framework de utilitários CSS.
+- **[Shadcn/ui](https://ui.shadcn.com/)**: Coleção de componentes reutilizáveis baseados no Radix UI.
+- **[Lucide React](https://lucide.dev/)**: Biblioteca de ícones.
 
-### Testes
+### Visualização de Dados e Mapas
 
-- [Vitest](https://vitest.dev/): Um framework de testes unitários extremamente rápido e com uma API compatível com Jest.
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): Para testar componentes React da maneira que os usuários os utilizam.
-- [JSDOM](https://github.com/jsdom/jsdom): Para simular um ambiente de DOM para testes em Node.js.
-- `@vitest/coverage-v8`: Para gerar relatórios de cobertura de testes.
+- **[React Leaflet](https://react-leaflet.js.org/)**: Componentes React para mapas Leaflet.
+- **[Recharts](https://recharts.org/)**: Biblioteca de gráficos composta e declarativa.
 
-### Qualidade de Código
+### Qualidade e Testes
 
-- [ESLint](https://eslint.org/): Para encontrar e corrigir problemas no código JavaScript/TypeScript.
-- [eslint-config-next](https://nextjs.org/docs/basic-features/eslint): Configurações de ESLint específicas para projetos Next.js.
+- **[Vitest](https://vitest.dev/)**: Framework de testes unitários rápido.
+- **[React Testing Library](https://testing-library.com/)**: Testes focados no comportamento do usuário.
+- **[ESLint](https://eslint.org/)** & **[Prettier](https://prettier.io/)**: Padronização e formatação de código.
+- **[Husky](https://typicode.github.io/husky/)** & **[Lint Staged](https://github.com/okonet/lint-staged)**: Hooks de git para garantir qualidade antes do commit.
 
-## 🧪 Estrutura de Testes
+## 📂 Estrutura do Projeto
 
-A configuração de testes foi projetada para ser flexível e poderosa.
+A estrutura segue os princípios de Clean Architecture adaptados para o front-end:
 
-- **`vitest.config.ts`**: Arquivo principal de configuração do Vitest. Define o ambiente (`jsdom`), a inclusão de arquivos de teste (`.spec.ts(x)` para unitários e `.test.ts(x)` para integração) e as configurações de cobertura.
-- **`vitest.setup.ts`**: Executado antes de cada arquivo de teste. Ideal para configurar `jest-dom` e realizar a limpeza do DOM (`cleanup`) após cada teste.
-- **`vitest.global.setup.ts`**: Executado uma única vez antes de toda a suíte de testes. Útil para configurações globais, como preparar um banco de dados de teste.
+```
+src/
+├── app/                    # Rotas e páginas do Next.js (App Router)
+├── components/
+│   ├── customs/            # Componentes específicos do domínio (Mapas, Gráficos, Listas)
+│   │   └── skeleton/       # Componentes de loading (Skeletons)
+│   └── ui/                 # Componentes de UI do shadcn
+├── core/
+│   ├── domain/             # Entidades e Tipos do domínio (Neighborhood, AirQuality)
+│   └── ports/              # Interfaces para repositórios (Portas de entrada/saída)
+├── hooks/                  # Custom Hooks (Lógica de estado e efeitos)
+├── lib/                    # Funções utilitárias e helpers
+└── repository/             # Implementações concretas dos repositórios (Chamadas à API)
+```
 
-## 🏁 Como Começar
+## 🚀 Como Rodar o Projeto
+
+### Pré-requisitos
+
+- Node.js (versão 18 ou superior recomendada)
+- npm, yarn ou pnpm
+
+### Passo a Passo
 
 1.  **Clone o repositório:**
 
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO> nome-do-projeto
-    cd nome-do-projeto
+    git clone https://github.com/thuansilva/desafio-civitas.git
+    cd desafio-civitas
     ```
 
 2.  **Instale as dependências:**
@@ -86,8 +93,6 @@ A configuração de testes foi projetada para ser flexível e poderosa.
     npm install
     # ou
     yarn install
-    # ou
-    pnpm install
     ```
 
 3.  **Inicie o servidor de desenvolvimento:**
@@ -96,12 +101,17 @@ A configuração de testes foi projetada para ser flexível e poderosa.
     npm run dev
     ```
 
-Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
+4.  **Acesse a aplicação:**
+    Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
 ## 📜 Scripts Disponíveis
 
-- `npm run dev`: Inicia o servidor de desenvolvimento do Next.js.
-- `npm run build`: Gera a build de produção da sua aplicação.
-- `npm run start`: Inicia um servidor de produção após a build.
-- `npm run lint`: Executa o ESLint para analisar o código em busca de problemas.
-- `npm run test`: Executa os testes com o Vitest.
+- `npm run dev`: Inicia o ambiente de desenvolvimento.
+- `npm run build`: Cria a build de produção.
+- `npm run start`: Inicia o servidor de produção.
+- `npm run lint`: Executa a verificação de linting.
+- `npm run test`: Executa os testes unitários com Vitest.
+
+---
+
+Desenvolvido por Thuan Silva para o Desafio Civitas.
