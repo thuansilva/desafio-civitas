@@ -22,64 +22,6 @@ const neighborhoods: NeighborhoodWithLatestReading[] = [
       created_at: "2023-10-01T12:05:00Z",
     },
   },
-  {
-    id: "2",
-    name: "Bairro B",
-    latitude: -22.9068,
-    longitude: -43.1729,
-    created_at: "2023-01-01T00:00:00Z",
-
-    latest_reading: {
-      id: "r2",
-      neighborhood_id: "1",
-      aqi: 42,
-      pm10: 12,
-      no2: 5,
-      co: 0.4,
-      quality_level: "bom",
-      recorded_at: "2023-10-01T12:00:00Z",
-      created_at: "2023-10-01T12:05:00Z",
-    },
-  },
-  {
-    id: "3",
-    name: "Bairro C",
-    latitude: -22.9068,
-    longitude: -43.1729,
-    created_at: "2023-01-01T00:00:00Z",
-
-    latest_reading: {
-      id: "r2",
-      neighborhood_id: "1",
-      aqi: 42,
-      pm10: 12,
-      no2: 5,
-      co: 0.4,
-      quality_level: "ruim",
-      recorded_at: "2023-10-01T12:00:00Z",
-      created_at: "2023-10-01T12:05:00Z",
-    },
-  },
-
-  {
-    id: "4",
-    name: "Bairro E",
-    latitude: -22.9068,
-    longitude: -43.1729,
-    created_at: "2023-01-01T00:00:00Z",
-
-    latest_reading: {
-      id: "r2",
-      neighborhood_id: "1",
-      aqi: 42,
-      pm10: 12,
-      no2: 5,
-      co: 0.4,
-      quality_level: "péssimo",
-      recorded_at: "2023-10-01T12:00:00Z",
-      created_at: "2023-10-01T12:05:00Z",
-    },
-  },
 ];
 
 describe("componente de Listagem", () => {
@@ -92,5 +34,31 @@ describe("componente de Listagem", () => {
     );
 
     expect(screen.getByText("Bairro A")).toBeInTheDocument();
+  });
+
+  it("should call onNeighborhoodClick when clicked", () => {
+    const mockClick = vi.fn();
+
+    render(
+      <ListNeighborhood
+        neighborhoods={neighborhoods}
+        onNeighborhoodClick={mockClick}
+      />,
+    );
+
+    screen.getByRole("button").click();
+
+    expect(mockClick).toHaveBeenCalledWith(neighborhoods[0]);
+  });
+
+  it("should format the update date correctly", () => {
+    render(
+      <ListNeighborhood
+        neighborhoods={neighborhoods}
+        onNeighborhoodClick={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText(/Atualizado:/)).toBeInTheDocument();
   });
 });

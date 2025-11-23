@@ -1,6 +1,8 @@
 import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import { getQualityColor, getQualityLabel } from "@/lib/utils";
 import { MapPin, Wind, Activity } from "lucide-react";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface ListViewProps {
   neighborhoods: NeighborhoodWithLatestReading[];
@@ -33,73 +35,80 @@ function ListNeighborhood({
           : "Sem dados";
 
         return (
-          <button
+          <Button
+            variant="ghost"
             key={neighborhood.id}
             onClick={() => onNeighborhoodClick(neighborhood)}
-            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-5 text-left group"
+            className="p-0 h-auto text-left shadow-md hover:shadow-xl transition-shadow"
           >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <MapPin size={20} className="text-gray-600" />
-                <h3 className="font-semibold text-gray-900 text-lg group-hover:text-blue-600 transition-colors">
-                  {neighborhood.name}
-                </h3>
-              </div>
-              {reading && (
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: color }}
-                />
-              )}
-            </div>
-
-            {reading ? (
-              <>
-                <div className="space-y-2 mb-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Qualidade</span>
-                    <span
-                      className="text-sm font-semibold px-2 py-1 rounded"
-                      style={{
-                        backgroundColor: `${color}20`,
-                        color: color,
-                      }}
-                    >
-                      {label}
-                    </span>
+            <Card className="w-full">
+              <CardHeader className="pb-2">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    <MapPin size={20} className="text-gray-600" />
+                    <h3 className="font-semibold text-gray-900 text-lg transition-colors">
+                      {neighborhood.name}
+                    </h3>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <Activity size={14} className="text-gray-500" />
-                      <span className="text-sm text-gray-600">AQI</span>
-                    </div>
-                    <span className="text-lg font-bold text-gray-900">
-                      {reading.aqi}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <Wind size={14} className="text-gray-500" />
-                      <span className="text-sm text-gray-600">PM10</span>
-                    </div>
-                    <span className="text-sm text-gray-700">
-                      {reading.pm10.toFixed(1)} µg/m³
-                    </span>
-                  </div>
+                  {reading && (
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: color }}
+                    />
+                  )}
                 </div>
+              </CardHeader>
+              <CardContent className="min-h-[220px] flex flex-col justify-between">
+                {reading ? (
+                  <>
+                    <div className="space-y-2 mb-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Qualidade</span>
+                        <span
+                          className="text-sm font-semibold px-2 py-1 rounded"
+                          style={{
+                            backgroundColor: `${color}20`,
+                            color,
+                          }}
+                        >
+                          {label}
+                        </span>
+                      </div>
 
-                <div className="text-xs text-gray-500 pt-2 border-t">
-                  Atualizado: {formatDate(reading.recorded_at)}
-                </div>
-              </>
-            ) : (
-              <div className="text-sm text-gray-500 py-4 text-center">
-                Nenhuma leitura disponível
-              </div>
-            )}
-          </button>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1">
+                          <Activity size={14} className="text-gray-500" />
+                          <span className="text-sm text-gray-600">AQI</span>
+                        </div>
+                        <span className="text-lg font-bold text-gray-900">
+                          {reading.aqi}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1">
+                          <Wind size={14} className="text-gray-500" />
+                          <span className="text-sm text-gray-600">PM10</span>
+                        </div>
+                        <span className="text-sm text-gray-700">
+                          {reading.pm10.toFixed(1)} µg/m³
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="text-xs text-gray-500 pt-2 border-t">
+                      Atualizado: {formatDate(reading.recorded_at)}
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-1 items-center justify-center text-sm text-gray-500">
+                    Nenhuma leitura disponível
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </Button>
         );
       })}
     </div>

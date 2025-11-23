@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { NeighborhoodWithLatestReading } from "@/core/domain/neighborhood";
 import { QualityLevel } from "@/lib/utils";
+import { CloudCog } from "lucide-react";
 
 export function useNeighborhoodFilter(
   neighborhoods: NeighborhoodWithLatestReading[],
@@ -23,7 +24,7 @@ export function useNeighborhoodFilter(
       filtered = filtered.filter((n) => n.id === neighborhoodFilter);
     }
 
-    return filtered;
+    return filtered.sort((a, b) => a.id.localeCompare(b.id));
   }, [neighborhoods, qualityFilter, neighborhoodFilter]);
 
   return {

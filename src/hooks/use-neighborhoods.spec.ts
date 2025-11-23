@@ -34,7 +34,7 @@ const mockData: NeighborhoodWithLatestReading[] = [
 ];
 
 describe("useNeighborhoods Hook", () => {
-  it("deve retornar o estado inicial corretamente", () => {
+  it("should return the initial state correctly", () => {
     const mockRepository: NeighborhoodRepository = {
       getAll: vi.fn().mockReturnValue(new Promise(() => {})),
       getReadings: vi.fn(),
@@ -47,7 +47,7 @@ describe("useNeighborhoods Hook", () => {
     expect(result.current.error).toBeNull();
   });
 
-  it("deve buscar dados com sucesso", async () => {
+  it("should fetch data successfully", async () => {
     const mockRepository: NeighborhoodRepository = {
       getAll: vi.fn().mockResolvedValue(mockData),
       getReadings: vi.fn(),
@@ -65,7 +65,7 @@ describe("useNeighborhoods Hook", () => {
     });
   });
 
-  it("deve lidar com erros ao buscar dados", async () => {
+  it("should handle errors when fetching data", async () => {
     const errorMessage = "Erro ao buscar dados";
     const mockRepository: NeighborhoodRepository = {
       getAll: vi.fn().mockRejectedValue(new Error(errorMessage)),
@@ -81,7 +81,7 @@ describe("useNeighborhoods Hook", () => {
     });
   });
 
-  it("deve permitir recarregar os dados (refetch)", async () => {
+  it("should allow data reload (refetch)", async () => {
     const mockRepository: NeighborhoodRepository = {
       getAll: vi.fn().mockResolvedValue(mockData),
       getReadings: vi.fn(),
